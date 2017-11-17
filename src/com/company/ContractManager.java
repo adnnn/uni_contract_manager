@@ -66,8 +66,11 @@ public class ContractManager {
   }
 
   private Contract createContractClass(Character contractType) {
-    ContractFactory factory = new ContractFactory();
-    return factory.make(contractType);
+    if (contractType == 'P') {
+      return new PersonalContract();
+    }
+
+    return new BusinessContract();
   }
 
   private Character getContractType(Scanner scanner) {
