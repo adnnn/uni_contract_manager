@@ -1,8 +1,6 @@
 package com.company;
 
-import java.util.HashMap;
 import java.util.InputMismatchException;
-import java.util.Map;
 import java.util.Scanner;
 import org.jetbrains.annotations.NotNull;
 
@@ -55,12 +53,51 @@ public class ContractManager {
    */
   private void createNewContract() {
     System.out.println("Okay, let's create a new contract.");
-    Map<String, Object> contract = new HashMap<>();
 
-    contract.put("name", this.getValidName(new Scanner(System.in)));
-    contract.put("package", this.getPackage(new Scanner(System.in)));
-    contract.put("data", this.getDataBundle(new Scanner(System.in)));
-    contract.put("period", this.getContractPeriod(new Scanner(System.in)));
+    Character contractType = this.getContractType(new Scanner(System.in));
+
+    Contract contract = this.createContractClass(contractType);
+
+    contract.setName(this.getValidName(new Scanner(System.in)));
+    contract.setPackageType(this.getPackage(new Scanner(System.in)));
+    contract.setDataBundle(this.getDataBundle(new Scanner(System.in)));
+    contract.setContractPeriod(this.getContractPeriod(new Scanner(System.in)));
+    contract.setDiscount();
+  }
+
+  private Contract createContractClass(Character contractType) {
+    ContractFactory factory = new ContractFactory();
+    return factory.make(contractType);
+  }
+
+  private Character getContractType(Scanner scanner) {
+    System.out.println("Please state the type of contract you are looking to create:");
+    System.out.println("1: Personal Contract");
+    System.out.println("2: Business Contract");
+
+    int choice = 0;
+    Character type = null;
+
+    try {
+      choice = scanner.nextInt();
+    } catch (InputMismatchException e) {
+      this.invalidInputMessage();
+      this.getContractType(new Scanner(System.in));
+    }
+
+    switch (choice) {
+      case 1:
+        type = 'P';
+        break;
+      case 2:
+        type = 'B';
+        break;
+      default:
+        this.invalidInputMessage();
+        this.getContractType(new Scanner(System.in));
+    }
+
+    return type;
   }
 
   private Integer getContractPeriod(Scanner scanner) {
