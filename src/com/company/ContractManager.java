@@ -4,11 +4,11 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import org.jetbrains.annotations.NotNull;
 
-public class ContractManager {
+class ContractManager {
 
   private Integer menuChoice = null;
 
-  public void execute() {
+  void execute() {
     do {
       this.showMenu();
       this.getMenuChoice(new Scanner(System.in));
@@ -62,7 +62,6 @@ public class ContractManager {
     contract.setPackageType(this.getPackage(new Scanner(System.in)));
     contract.setDataBundle(this.getDataBundle(new Scanner(System.in)));
     contract.setContractPeriod(this.getContractPeriod(new Scanner(System.in)));
-    contract.setDiscount();
   }
 
   private Contract createContractClass(Character contractType) {

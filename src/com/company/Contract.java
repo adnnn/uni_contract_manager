@@ -14,6 +14,12 @@ public abstract class Contract {
   private Date date;
   protected Integer discount;
 
+  public Contract() {
+    this.setDiscount();
+  }
+
+  public abstract void setDiscount();
+
   public String getName() {
     return name;
   }
