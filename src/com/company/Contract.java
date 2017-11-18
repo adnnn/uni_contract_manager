@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.Date;
+import java.util.List;
 
 public abstract class Contract {
 
@@ -12,7 +13,14 @@ public abstract class Contract {
   private String reference;
   private Integer basePrice;
   private Date date;
+  private Integer finalPrice;
   protected Integer discount;
+
+  private int[][] prices = {
+      {500, 700, 900, 0},
+      {650, 850, 1050, 0},
+      {850, 1050, 1250, 2000}
+  };
 
   public Contract() {
     this.setDiscount();
@@ -91,5 +99,24 @@ public abstract class Contract {
   public Integer finalPrice() {
     Integer discount = (this.getBasePrice() / 100) * this.getDiscount();
     return this.getBasePrice() - discount;
+  }
+
+  public void calculatePrice() {
+    setBasePrice(determineBasePrice());
+
+    Integer discount = (this.getBasePrice() / 100) * this.getDiscount();
+    this.setFinalPrice(this.getBasePrice() - discount);
+  }
+
+  private Integer determineBasePrice() {
+    return this.prices[this.getPackageType() - 1][this.getDataBundle() - 1];
+  }
+
+  public Integer getFinalPrice() {
+    return finalPrice;
+  }
+
+  public void setFinalPrice(Integer finalPrice) {
+    this.finalPrice = finalPrice;
   }
 }

@@ -54,14 +54,58 @@ class ContractManager {
   private void createNewContract() {
     System.out.println("Okay, let's create a new contract.");
 
-    Character contractType = this.getContractType(new Scanner(System.in));
-
-    Contract contract = this.createContractClass(contractType);
+    Contract contract = this.createContractClass(this.getContractType(new Scanner(System.in)));
 
     contract.setName(this.getValidName(new Scanner(System.in)));
     contract.setPackageType(this.getPackage(new Scanner(System.in)));
     contract.setDataBundle(this.getDataBundle(new Scanner(System.in)));
     contract.setContractPeriod(this.getContractPeriod(new Scanner(System.in)));
+    contract.setInternational(this.getInternational(new Scanner(System.in)));
+    contract.calculatePrice();
+
+    this.confirmContract(contract);
+
+    contract.save();
+  }
+
+  private void confirmContract(Contract contract) {
+
+    System.out.println("Please confirm that the information above is accurate:");
+    System.out.println("1: Yes, everything is accurate.");
+    System.out.println("2: No, something is wrong. Start again.");
+
+    Scanner scanner = new Scanner(System.in);
+
+  }
+
+  private Character getInternational(Scanner scanner) {
+    System.out.println("Would you like to allow international calls?");
+    System.out.println("1: Yes");
+    System.out.println("2: No");
+
+    int choice = 0;
+    Character decision = null;
+
+    try {
+      choice = scanner.nextInt();
+    } catch (InputMismatchException e) {
+      this.invalidInputMessage();
+      this.getInternational(new Scanner(System.in));
+    }
+
+    switch (choice) {
+      case 1:
+        decision = 'Y';
+        break;
+      case 2:
+        decision = 'N';
+        break;
+      default:
+        this.invalidInputMessage();
+        this.getInternational(new Scanner(System.in));
+    }
+
+    return decision;
   }
 
   private Contract createContractClass(Character contractType) {
