@@ -76,6 +76,33 @@ class ContractManager {
 
     Scanner scanner = new Scanner(System.in);
 
+    int choice = 0;
+
+    try {
+      choice = scanner.nextInt();
+    } catch (InputMismatchException e) {
+      this.invalidInputMessage();
+      this.confirmContract(contract);
+    }
+
+    switch (choice) {
+      case 1:
+        contract.save();
+        break;
+      case 2:
+        this.createNewContract();
+        break;
+      default:
+        this.invalidInputMessage();
+        this.confirmContract(contract);
+    }
+
+    this.resetContractManager();
+  }
+
+  private void resetContractManager() {
+    this.menuChoice = null;
+    this.execute();
   }
 
   private Character getInternational(Scanner scanner) {

@@ -1,7 +1,7 @@
 package com.company;
 
-import java.util.Date;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public abstract class Contract {
 
@@ -12,7 +12,7 @@ public abstract class Contract {
   private Character international;
   private String reference;
   private Integer basePrice;
-  private Date date;
+  private String date;
   private Integer finalPrice;
   protected Integer discount;
 
@@ -24,6 +24,13 @@ public abstract class Contract {
 
   public Contract() {
     this.setDiscount();
+    this.setDate(this.getCurrentDate());
+  }
+
+  private String getCurrentDate() {
+    Calendar cal = Calendar.getInstance();
+    SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
+    return sdf.format(cal);
   }
 
   public abstract void setDiscount();
@@ -84,11 +91,11 @@ public abstract class Contract {
     this.basePrice = basePrice;
   }
 
-  public Date getDate() {
+  public String getDate() {
     return date;
   }
 
-  public void setDate(Date date) {
+  public void setDate(String date) {
     this.date = date;
   }
 
@@ -118,5 +125,11 @@ public abstract class Contract {
 
   public void setFinalPrice(Integer finalPrice) {
     this.finalPrice = finalPrice;
+  }
+
+  /**
+   * @TODO Save to TSV
+   */
+  public void save() {
   }
 }
