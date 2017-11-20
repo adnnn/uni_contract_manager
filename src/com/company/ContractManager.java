@@ -8,15 +8,26 @@ class ContractManager {
 
   private Integer menuChoice = null;
 
+  /**
+   * Main - Starts here.
+   */
   public static void main(String[] args) {
     ContractManager instance = createInstance();
     instance.execute();
   }
 
+  /**
+   * Creates a dynamic instance of ContractManager.
+   *
+   * @return ContractManager
+   */
   private static ContractManager createInstance() {
     return new ContractManager();
   }
 
+  /**
+   * Executes the main menu and responds to the users choice.
+   */
   private void execute() {
     do {
       this.showMenu();
@@ -41,15 +52,24 @@ class ContractManager {
     }
   }
 
+  /**
+   * Kills the program should the user select it from the menu.
+   */
   private void killContractManger() {
     System.out.println("Thanks for stopping by!");
     System.exit(1);
   }
 
+  /**
+   * @todo Find a specific contract and display its overview.
+   */
   private void findContract() {
     System.out.println("Please enter a contract identifier: ");
   }
 
+  /**
+   * @todo Summary of contracts for a given month.
+   */
   private void monthlySummaryOfContracts() {
     System.out.println("Please enter the month (1-12) you would like to view all contracts for: ");
   }
