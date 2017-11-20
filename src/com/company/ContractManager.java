@@ -59,7 +59,7 @@ class ContractManager {
     contract.setName(this.getValidName(new Scanner(System.in)));
     contract.setPackageType(this.getPackage(new Scanner(System.in)));
     contract.setDataBundle(this.getDataBundle(new Scanner(System.in)));
-    contract.setContractPeriod(this.getContractPeriod(new Scanner(System.in)));
+    contract.setContractDuration(this.getContractPeriod(new Scanner(System.in)));
     contract.setInternational(this.getInternational(new Scanner(System.in)));
     contract.calculatePrice();
 
@@ -69,6 +69,8 @@ class ContractManager {
   }
 
   private void confirmContract(Contract contract) {
+
+    this.displayContractOverview(contract);
 
     System.out.println("Please confirm that the information above is accurate:");
     System.out.println("1: Yes, everything is accurate.");
@@ -98,6 +100,24 @@ class ContractManager {
     }
 
     this.resetContractManager();
+  }
+
+  private void displayContractOverview(Contract contract) {
+    printBorderTop();
+    System.out.printf("| Customer: %-25s         |", contract.getName());
+    System.out.println();
+    System.out.printf("|      Ref: %-6s", contract.getReference());
+    System.out.printf("%s |", "Date: " + contract.getDate());
+    System.out.println();
+  }
+
+  private void printBorderTop() {
+    System.out.print("+");
+    for (int i = 0; i < 45; i++) {
+      System.out.print("-");
+    }
+    System.out.print("+");
+    System.out.println();
   }
 
   private void resetContractManager() {

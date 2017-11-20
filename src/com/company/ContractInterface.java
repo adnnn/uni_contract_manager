@@ -2,5 +2,5 @@ package com.company;
 
 public interface ContractInterface {
 
-  void setDiscount();
+  void setDiscount(Integer duration);
 }

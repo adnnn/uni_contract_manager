@@ -23,20 +23,19 @@ public abstract class Contract {
   };
 
   public Contract() {
-    this.setDiscount();
     this.setDate(this.getCurrentDate());
   }
 
   private String getCurrentDate() {
     Calendar cal = Calendar.getInstance();
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
-    return sdf.format(cal);
+    return sdf.format(cal.getTime());
   }
 
-  public abstract void setDiscount();
+  public abstract void setDiscount(Integer duration);
 
   public String getName() {
-    return name;
+    return this.name;
   }
 
   public void setName(String name) {
@@ -63,8 +62,10 @@ public abstract class Contract {
     return contractDuration;
   }
 
-  public void setContractPeriod(Integer contractPeriod) {
-    this.contractDuration = contractPeriod;
+  public void setContractDuration(Integer contractDuration) {
+    this.contractDuration = contractDuration;
+
+    this.setDiscount(this.getContractDuration());
   }
 
   public Character getInternational() {
