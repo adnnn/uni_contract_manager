@@ -8,7 +8,16 @@ class ContractManager {
 
   private Integer menuChoice = null;
 
-  void execute() {
+  public static void main(String[] args) {
+    ContractManager instance = createInstance();
+    instance.execute();
+  }
+
+  private static ContractManager createInstance() {
+    return new ContractManager();
+  }
+
+  private void execute() {
     do {
       this.showMenu();
       this.getMenuChoice(new Scanner(System.in));
