@@ -21,7 +21,7 @@ class ContractManager {
     do {
       this.showMenu();
       this.getMenuChoice(new Scanner(System.in));
-    } while (menuChoice == null);
+    } while (this.menuChoice == null);
 
     switch (this.menuChoice) {
       case 1:
@@ -39,8 +39,6 @@ class ContractManager {
       case 0:
         this.killContractManger();
     }
-
-
   }
 
   private void killContractManger() {
@@ -57,8 +55,7 @@ class ContractManager {
   }
 
   /**
-   * Not advisable from what I've read? Does Map<String, Either<String, Integer>> work?! Maybe not
-   * cos there's a character field?!
+   * Starts the process for creating a new contract.
    */
   private void createNewContract() {
     System.out.println("Okay, let's create a new contract.");
@@ -77,6 +74,10 @@ class ContractManager {
     contract.save();
   }
 
+  /**
+   * Displays overview of contract and confirms whether the details are correct prior to saving to a
+   * file.
+   */
   private void confirmContract(Contract contract) {
 
     this.displayContractOverview(contract);
@@ -111,6 +112,12 @@ class ContractManager {
     this.resetContractManager();
   }
 
+  /**
+   * Displays the contract overview.
+   *
+   * @param contract A contract object
+   * @see com.company.Contract A Contract object
+   */
   private void displayContractOverview(Contract contract) {
     printBorderTop();
     System.out.printf("| Customer: %-25s         |", contract.getName());
@@ -120,6 +127,9 @@ class ContractManager {
     System.out.println();
   }
 
+  /**
+   * Prints top top and bottom borders for the console output.
+   */
   private void printBorderTop() {
     System.out.print("+");
     for (int i = 0; i < 45; i++) {
@@ -129,11 +139,22 @@ class ContractManager {
     System.out.println();
   }
 
+  /**
+   * Reset the ContractManager application.
+   */
   private void resetContractManager() {
     this.menuChoice = null;
     this.execute();
   }
 
+  /**
+   * Ask user whether they want international calls, retrieves and validates input from user.
+   *
+   * @param scanner Scanner Object
+   * @return Character - Y for Yes and N for No.
+   * @see Scanner Scanner Object
+   * @see Character Character
+   */
   private Character getInternational(Scanner scanner) {
     System.out.println("Would you like to allow international calls?");
     System.out.println("1: Yes");
@@ -164,6 +185,16 @@ class ContractManager {
     return decision;
   }
 
+  /**
+   * Instantiate a contract based upon the type selected by the user.
+   *
+   * @param contractType Char as returned from {@link #getContractType(Scanner)}
+   * ContractManager.getContractType();}
+   * @return Contract A subclass of Contract based upon the type selected.
+   * @see com.company.Contract Contract Class [Abstract]
+   * @see com.company.BusinessContract BusinessContract Class [Concrete]
+   * @see com.company.PersonalContract PersonalContract Class [Concrete]
+   */
   private Contract createContractClass(Character contractType) {
     if (contractType == 'P') {
       return new PersonalContract();
@@ -172,6 +203,14 @@ class ContractManager {
     return new BusinessContract();
   }
 
+  /**
+   * Ask user to choose a contract type, retrieves and validates input.
+   *
+   * @param scanner Scanner
+   * @return Character P for Personal Contract or B for Business Contract
+   * @see Character Character
+   * @see Scanner Scanner Class
+   */
   private Character getContractType(Scanner scanner) {
     System.out.println("Please state the type of contract you are looking to create:");
     System.out.println("1: Personal Contract");
@@ -202,6 +241,14 @@ class ContractManager {
     return type;
   }
 
+  /**
+   * Ask user to specify their contract period, retrieves and validates input.
+   *
+   * @param scanner Scanner Class
+   * @return Integer Denotes duration of contract in months [1, 12, 18 24]
+   * @see Scanner Scanner Class
+   * @see Integer Integer Class (note: not int the primitive data type)
+   */
   private Integer getContractPeriod(Scanner scanner) {
     System.out.println("Please enter the desired contract period");
     System.out.println("1: One Month");
@@ -242,6 +289,14 @@ class ContractManager {
     return months;
   }
 
+  /**
+   * Asks user to choose a data bundle, retrieves input and validates it.
+   *
+   * @param scanner Scanner object
+   * @return Integer Denotes data bundle [1 => low, 2 => medium, 3 => High, 4 => Unlimited]
+   * @see Scanner Scanner Class
+   * @see Integer Integer Class (note: not int the primitive data type)
+   */
   private Integer getDataBundle(Scanner scanner) {
     System.out.println("Please enter the data bundle you desire:");
     System.out.println("1: Low");
@@ -267,10 +322,21 @@ class ContractManager {
     return choice;
   }
 
+  /**
+   * Generic error message: Invalid Input.
+   */
   private void invalidInputMessage() {
     System.out.println("Sorry, the choice you made was not valid: Please try again.");
   }
 
+  /**
+   * Ask user to choose a package, retrieves and validates input.
+   *
+   * @param scanner Scanner object
+   * @return Integer Denotes Package [1 => small, 2 => medium, 3 => large]
+   * @see Scanner Scanner Class
+   * @see Integer Integer Class (note: not int the primitive data type)
+   */
   private Integer getPackage(Scanner scanner) {
     System.out.println("Please Enter Your Package Choice:");
     System.out.println("1: Small");
@@ -293,6 +359,14 @@ class ContractManager {
     return choice;
   }
 
+  /**
+   * Asks user for name, retrieves and validates input.
+   *
+   * @param scanner Scanner Object
+   * @return String Correctly formatted to "A Clark" format.
+   * @see Scanner Scanner Class
+   * @see String String Class
+   */
   private String getValidName(Scanner scanner) {
     System.out.println("Please enter the full name of your customer: ");
     String name = this.formatName(scanner.nextLine());
@@ -305,6 +379,13 @@ class ContractManager {
     return name;
   }
 
+  /**
+   * Formats the name provided by the user during {@link #getValidName(Scanner) getValidName()
+   * method}.
+   *
+   * @param enteredName String representation of the name provided by the user.
+   * @return name A correctly formatted String [Andrew Clark => A Clark]
+   */
   @NotNull
   private String formatName(String enteredName) {
     String name = "";
@@ -320,10 +401,19 @@ class ContractManager {
     return name;
   }
 
+  /**
+   * @Todo Return an overview of contracts in archive.txt
+   */
   private void summaryOfContracts() {
     System.out.println("A summary of all contracts");
   }
 
+  /**
+   * Retrieves menu choice from the user and validates that it is a legitimate option.
+   *
+   * @param scanner Scanner Object
+   * @see Scanner Scanner Class
+   */
   private void getMenuChoice(Scanner scanner) {
     this.menuChoice = scanner.nextInt();
 
@@ -336,6 +426,9 @@ class ContractManager {
     }
   }
 
+  /**
+   * Display the main menu.
+   */
   private void showMenu() {
     System.out.println("1. Enter A New Contract");
     System.out.println("2. Display Summary of Contracts");
