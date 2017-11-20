@@ -65,6 +65,8 @@ public abstract class Contract {
   public void setContractDuration(Integer contractDuration) {
     this.contractDuration = contractDuration;
 
+    // Unnecessary method call? Prevents side effects from taking place
+    // in this space though, right?!
     this.setDiscount(this.getContractDuration());
   }
 

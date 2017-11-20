@@ -422,7 +422,7 @@ class ContractManager {
   }
 
   /**
-   * @Todo Return an overview of contracts in archive.txt
+   * @todo Return an overview of contracts in archive.txt
    */
   private void summaryOfContracts() {
     System.out.println("A summary of all contracts");
