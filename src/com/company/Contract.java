@@ -1,5 +1,9 @@
 package com.company;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -134,5 +138,22 @@ public abstract class Contract {
    * @TODO Save to TSV
    */
   public void save() {
+    try {
+      FileWriter fw = new FileWriter(new File("data/contracts.txt"));
+      PrintWriter pw = new PrintWriter(fw);
+
+      pw.print(this.getDate() + "\t");
+      pw.print(this.getPackageType() + "\t");
+      pw.print(this.getDataBundle() + "\t");
+      pw.print(this.getContractDuration() + "\t");
+      pw.print(this.getInternational() + "\t");
+      pw.print(this.getReference() + "\t");
+      pw.print(this.getFinalPrice() + "\t");
+      pw.print(this.getName() + "\t");
+      pw.println();
+
+    } catch (IOException e) {
+      System.out.println("Error Printing Tab Delimited File");
+    }
   }
 }
