@@ -22,13 +22,18 @@ public abstract class Contract {
       {850, 1050, 1250, 2000}
   };
 
-  public Contract(Character contractType) {
+  protected Contract(Character contractType) {
     reference = generateReference(contractType);
     setDate(getCurrentDate());
   }
 
-  protected String generateReference(Character contractType) {
-    return "JB123" + contractType.toString();
+  private String generateReference(Character contractType) {
+    String ref = "JB123";
+    if (contractType == 'B') {
+      return ref + "B";
+    }
+
+    return ref + "N";
   }
 
   private String getCurrentDate() {
