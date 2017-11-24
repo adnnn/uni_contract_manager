@@ -101,6 +101,7 @@ class ContractManager {
   private void confirmContract(Contract contract) {
 
     confirmPackageDataCombination(contract);
+    confirmDuration(contract);
 
     this.displayContractOverview(contract);
 
@@ -132,6 +133,20 @@ class ContractManager {
     }
 
     this.resetContractManager();
+  }
+
+  private void confirmDuration(Contract contract) {
+    if (contract instanceof BusinessContract && contract.getContractDuration() < 12) {
+      System.out.println(
+          "Sorry, business contracts require a minimum period of 12 months: "
+              + "please choose another duration"
+      );
+
+      contract.setContractDuration(getContractPeriod(new Scanner(System.in)));
+      contract.calculatePrice();
+
+      confirmContract(contract);
+    }
   }
 
   private void confirmPackageDataCombination(Contract contract) {
@@ -180,7 +195,7 @@ class ContractManager {
 
     System.out.printf("|%48s|\n", "");
 
-    System.out.printf("| %8s: %2s %17s: %-12s |\n",
+    System.out.printf("| %8s: %2s %18s: %-12s |\n",
         "Discount", OutputFormatter.discount(contract.getDiscount()),
         "Intl. Calls", OutputFormatter.international(contract.getInternational())
     );

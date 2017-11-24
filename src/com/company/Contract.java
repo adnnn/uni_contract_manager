@@ -14,7 +14,7 @@ public abstract class Contract {
   private Integer basePrice;
   private String date;
   private Integer finalPrice;
-  protected Integer discount;
+  Integer discount;
 
   private int[][] prices = {
       {500, 700, 900, 0},
@@ -22,7 +22,7 @@ public abstract class Contract {
       {850, 1050, 1250, 2000}
   };
 
-  protected Contract(Character contractType) {
+  Contract(Character contractType) {
     reference = generateReference(contractType);
     setDate(getCurrentDate());
   }
@@ -44,82 +44,73 @@ public abstract class Contract {
 
   public abstract void setDiscount(Integer duration);
 
-  public String getName() {
+  String getName() {
     return this.name;
   }
 
-  public void setName(String name) {
+  void setName(String name) {
     this.name = name;
   }
 
-  public Integer getPackageType() {
+  Integer getPackageType() {
     return packageType;
   }
 
-  public void setPackageType(Integer packageType) {
+  void setPackageType(Integer packageType) {
     this.packageType = packageType;
   }
 
-  public Integer getDataBundle() {
+  Integer getDataBundle() {
     return dataBundle;
   }
 
-  public void setDataBundle(Integer dataBundle) {
+  void setDataBundle(Integer dataBundle) {
     this.dataBundle = dataBundle;
   }
 
-  public Integer getContractDuration() {
+  Integer getContractDuration() {
     return contractDuration;
   }
 
-  public void setContractDuration(Integer contractDuration) {
+  void setContractDuration(Integer contractDuration) {
     this.contractDuration = contractDuration;
 
     this.setDiscount(contractDuration);
   }
 
-  public Character getInternational() {
+  Character getInternational() {
     return international;
   }
 
-  public void setInternational(Character international) {
+  void setInternational(Character international) {
     this.international = international;
   }
 
-  public String getReference() {
+  String getReference() {
     return reference;
   }
 
-  public void setReference(String reference) {
-    this.reference = reference;
-  }
-
-  public Integer getBasePrice() {
+  Integer getBasePrice() {
     return basePrice;
   }
 
-  public void setBasePrice(Integer basePrice) {
+  private void setBasePrice(Integer basePrice) {
     this.basePrice = basePrice;
   }
 
-  public String getDate() {
+  String getDate() {
     return date;
   }
 
-  public void setDate(String date) {
+  private void setDate(String date) {
     this.date = date;
   }
 
-  public Integer getDiscount() {
+  Integer getDiscount() {
     return discount;
   }
 
-  public Integer finalPrice() {
-    Integer discount = (this.getBasePrice() / 100) * this.getDiscount();
-    return this.getBasePrice() - discount;
-  }
-
-  public void calculatePrice() {
+  void calculatePrice() {
     setBasePrice(determineBasePrice());
 
     Integer discount = (this.getBasePrice() / 100) * this.getDiscount();
@@ -141,23 +132,23 @@ public abstract class Contract {
     return getInternational() == 'Y';
   }
 
-  public Integer getFinalPrice() {
+  Integer getFinalPrice() {
     return finalPrice;
   }
 
-  public void setFinalPrice(Integer finalPrice) {
+  private void setFinalPrice(Integer finalPrice) {
     this.finalPrice = finalPrice;
   }
 
   /**
    * @TODO Save to TSV
    */
-  public void save() {
+  void save() {
     Store store = new Store();
     store.save(this);
   }
 
-  public boolean hasDiscount() {
+  boolean hasDiscount() {
     return discount > 0;
   }
 }

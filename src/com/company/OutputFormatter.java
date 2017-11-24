@@ -1,8 +1,8 @@
 package com.company;
 
-public class OutputFormatter {
+class OutputFormatter {
 
-  public static String discount(Integer discount) {
+  static String discount(Integer discount) {
     switch (discount) {
       case 0:
         return "None";
@@ -11,7 +11,7 @@ public class OutputFormatter {
     }
   }
 
-  public static String international(char s) {
+  static String international(char s) {
     if (s == 'Y') {
       return "Yes";
     }
@@ -19,14 +19,14 @@ public class OutputFormatter {
     return "No";
   }
 
-  public static String period(Integer contractDuration) {
+  static String period(Integer contractDuration) {
     if (contractDuration == 1) {
       return contractDuration.toString() + " Month";
     }
     return contractDuration.toString() + " Months";
   }
 
-  public static String type(Contract contract) {
+  static String type(Contract contract) {
     if (contract instanceof BusinessContract) {
       return "Business";
     }
@@ -34,7 +34,7 @@ public class OutputFormatter {
     return "Non-Business";
   }
 
-  public static String dataBundle(Integer dataBundle) {
+  static String dataBundle(Integer dataBundle) {
     switch (dataBundle) {
       case 1:
         return "Low (1 GB)";
@@ -47,7 +47,7 @@ public class OutputFormatter {
     }
   }
 
-  public static String packageType(Integer packageType) {
+  static String packageType(Integer packageType) {
     switch (packageType) {
       case 1:
         return "Small (300)";
@@ -58,11 +58,11 @@ public class OutputFormatter {
     }
   }
 
-  public static String date(String date) {
+  static String date(String date) {
     return date.replace("-", " ");
   }
 
-  public static String monthlyFeeMessage(Contract contract) {
+  static String monthlyFeeMessage(Contract contract) {
 
     if (contract.hasDiscount()) {
       return "Discounted Monthly Charge";
@@ -71,7 +71,7 @@ public class OutputFormatter {
     return "Monthly Charge";
   }
 
-  public static float monthlyFee(Contract contract) {
+  static float monthlyFee(Contract contract) {
     return contract.getFinalPrice() / 100;
   }
 }
