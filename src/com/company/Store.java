@@ -12,18 +12,19 @@ public class Store {
    */
   public void save(Contract contract) {
     try {
-      FileWriter fw = new FileWriter(new File("./data/contracts.txt"));
+      FileWriter fw = new FileWriter(new File("contracts.txt"), true);
       PrintWriter pw = new PrintWriter(fw);
 
-      pw.print(contract.getDate() + "\t");
-      pw.print(contract.getPackageType() + "\t");
-      pw.print(contract.getDataBundle() + "\t");
-      pw.print(contract.getContractDuration() + "\t");
-      pw.print(contract.getInternational() + "\t");
-      pw.print(contract.getReference() + "\t");
-      pw.print(contract.getFinalPrice() + "\t");
-      pw.print(contract.getName() + "\t");
+      pw.append(contract.getDate() + "\t");
+      pw.append(contract.getPackageType() + "\t");
+      pw.append(contract.getDataBundle() + "\t");
+      pw.append(contract.getContractDuration() + "\t");
+      pw.append(contract.getInternational() + "\t");
+      pw.append(contract.getReference() + "\t");
+      pw.append(contract.getFinalPrice() + "\t");
+      pw.append(contract.getName() + "\t");
       pw.println();
+      pw.close();
 
     } catch (IOException e) {
       System.out.println("Error Printing Tab Delimited File");

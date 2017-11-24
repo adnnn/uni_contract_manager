@@ -22,8 +22,13 @@ public abstract class Contract {
       {850, 1050, 1250, 2000}
   };
 
-  public Contract() {
-    this.setDate(this.getCurrentDate());
+  public Contract(Character contractType) {
+    reference = generateReference(contractType);
+    setDate(getCurrentDate());
+  }
+
+  protected String generateReference(Character contractType) {
+    return "JB123" + contractType.toString();
   }
 
   private String getCurrentDate() {
@@ -65,9 +70,7 @@ public abstract class Contract {
   public void setContractDuration(Integer contractDuration) {
     this.contractDuration = contractDuration;
 
-    // Unnecessary method call? Prevents side effects from taking place
-    // in this space though, right?!
-    this.setDiscount(this.getContractDuration());
+    this.setDiscount(contractDuration);
   }
 
   public Character getInternational() {
@@ -119,7 +122,18 @@ public abstract class Contract {
   }
 
   private Integer determineBasePrice() {
-    return this.prices[this.getPackageType() - 1][this.getDataBundle() - 1];
+    int base = this.prices[this.getPackageType() - 1][this.getDataBundle() - 1];
+
+    if (hasInternational()) {
+      // Add 15% to existing base price
+      base += (base / 100) * 15;
+    }
+
+    return base;
+  }
+
+  private boolean hasInternational() {
+    return getInternational() == 'Y';
   }
 
   public Integer getFinalPrice() {
