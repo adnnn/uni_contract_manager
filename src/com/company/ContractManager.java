@@ -155,23 +155,44 @@ class ContractManager {
    */
   private void displayContractOverview(Contract contract) {
     printBorderTop();
-    System.out.printf("|%47s|\n", "");
-    System.out.printf("| %8s: %-25s           |\n", "Customer", contract.getName());
-    System.out.printf("|%47s|\n", "");
-    System.out.printf("| %8s: %-13s    %5s: %-11s |\n", "Ref", contract.getReference(), "Date",
-        contract.getDate());
-    System.out.printf("| %8s: %-13s    %5s: %-11s |\n", "Package", "Medium (1200)", "Data",
-        contract.getDataBundle());
-    System.out
-        .printf("| %8s: %-13s    %5s: %-11s |\n", "Period", contract.getContractDuration(), "Type",
-            "B");
-    System.out.printf("|%47s|\n", "");
-    System.out
-        .printf("| %8s: %2d%% %18s: %-11s |\n", "Discount", contract.getDiscount(), "Intl. Calls",
-            contract.getInternational().toString());
-    System.out.printf("|%47s|\n", "");
-    System.out.printf("| Discounted Monthly Charge: £7.65 |\n");
-    System.out.printf("|%47s|\n", "");
+    System.out.printf("|%48s|\n", "");
+
+    System.out.printf("| %8s: %-36s |\n",
+        "Customer", contract.getName()
+    )
+    ;
+    System.out.printf("|%48s|\n", "");
+
+    System.out.printf("| %8s: %-13s    %5s: %-12s |\n",
+        "Ref", contract.getReference(),
+        "Date", OutputFormatter.date(contract.getDate())
+    );
+
+    System.out.printf("| %8s: %-13s    %5s: %-12s |\n",
+        "Package", OutputFormatter.packageType(contract.getPackageType()),
+        "Data", OutputFormatter.dataBundle(contract.getDataBundle())
+    );
+
+    System.out.printf("| %8s: %-13s    %5s: %-12s |\n",
+        "Period", OutputFormatter.period(contract.getContractDuration()),
+        "Type", OutputFormatter.type(contract)
+    );
+
+    System.out.printf("|%48s|\n", "");
+
+    System.out.printf("| %8s: %2s %17s: %-12s |\n",
+        "Discount", OutputFormatter.discount(contract.getDiscount()),
+        "Intl. Calls", OutputFormatter.international(contract.getInternational())
+    );
+
+    System.out.printf("|%48s|\n", "");
+
+    System.out.printf("| %s: £%3.2f |\n",
+        OutputFormatter.monthlyFeeMessage(contract),
+        OutputFormatter.monthlyFee(contract)
+    );
+
+    System.out.printf("|%48s|\n", "");
     printBorderTop();
   }
 
@@ -180,7 +201,7 @@ class ContractManager {
    */
   private void printBorderTop() {
     System.out.print("+");
-    for (int i = 0; i < 47; i++) {
+    for (int i = 0; i < 48; i++) {
       System.out.print("-");
     }
     System.out.print("+");

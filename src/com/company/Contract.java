@@ -156,4 +156,8 @@ public abstract class Contract {
     Store store = new Store();
     store.save(this);
   }
+
+  public boolean hasDiscount() {
+    return discount > 0;
+  }
 }
