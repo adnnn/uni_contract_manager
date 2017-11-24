@@ -100,6 +100,8 @@ class ContractManager {
    */
   private void confirmContract(Contract contract) {
 
+    confirmPackageDataCombination(contract);
+
     this.displayContractOverview(contract);
 
     System.out.println("Please confirm that the information above is accurate:");
@@ -132,19 +134,45 @@ class ContractManager {
     this.resetContractManager();
   }
 
+  private void confirmPackageDataCombination(Contract contract) {
+    if (contract.getBasePrice() == 0) {
+      System.out.println(
+          "Invalid package and data bundle combination: Please choose another combination");
+      contract.setPackageType(this.getPackage(new Scanner(System.in)));
+      contract.setDataBundle(this.getDataBundle(new Scanner(System.in)));
+      contract.calculatePrice();
+
+      confirmContract(contract);
+    }
+  }
+
   /**
    * Displays the contract overview.
    *
    * @param contract A contract object
+   * @todo Refactor this method into methods and/or a separate class
    * @see com.company.Contract A Contract object
    */
   private void displayContractOverview(Contract contract) {
     printBorderTop();
-    System.out.printf("| Customer: %-25s         |", contract.getName());
-    System.out.println();
-    System.out.printf("|      Ref: %-6s", contract.getReference());
-    System.out.printf("%s |", "Date: " + contract.getDate());
-    System.out.println();
+    System.out.printf("|%47s|\n", "");
+    System.out.printf("| %8s: %-25s           |\n", "Customer", contract.getName());
+    System.out.printf("|%47s|\n", "");
+    System.out.printf("| %8s: %-13s    %5s: %-11s |\n", "Ref", contract.getReference(), "Date",
+        contract.getDate());
+    System.out.printf("| %8s: %-13s    %5s: %-11s |\n", "Package", "Medium (1200)", "Data",
+        contract.getDataBundle());
+    System.out
+        .printf("| %8s: %-13s    %5s: %-11s |\n", "Period", contract.getContractDuration(), "Type",
+            "B");
+    System.out.printf("|%47s|\n", "");
+    System.out
+        .printf("| %8s: %2d%% %18s: %-11s |\n", "Discount", contract.getDiscount(), "Intl. Calls",
+            contract.getInternational().toString());
+    System.out.printf("|%47s|\n", "");
+    System.out.printf("| Discounted Monthly Charge: £7.65 |\n");
+    System.out.printf("|%47s|\n", "");
+    printBorderTop();
   }
 
   /**
@@ -152,7 +180,7 @@ class ContractManager {
    */
   private void printBorderTop() {
     System.out.print("+");
-    for (int i = 0; i < 45; i++) {
+    for (int i = 0; i < 47; i++) {
       System.out.print("-");
     }
     System.out.print("+");
@@ -412,7 +440,7 @@ class ContractManager {
 
     try {
       String[] parts = enteredName.split(" ");
-      name = parts[0].charAt(0) + " " + parts[1];
+      name = parts[0].toUpperCase().charAt(0) + " " + parts[1].toUpperCase();
     } catch (ArrayIndexOutOfBoundsException e) {
       this.invalidInputMessage();
       this.getValidName(new Scanner(System.in));
