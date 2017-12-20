@@ -1,8 +1,11 @@
 package com.company;
 
 import java.util.InputMismatchException;
+import java.util.List;
+import java.util.OptionalDouble;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 class ContractManager {
 
@@ -76,6 +79,8 @@ class ContractManager {
 
   /**
    * Starts the process for creating a new contract.
+   *
+   * @TODO Alternative to picking a package a bundle!
    */
   private void createNewContract() {
     System.out.println("Okay, let's create a new contract.");
@@ -510,7 +515,65 @@ class ContractManager {
    * @todo Return an overview of contracts in archive.txt
    */
   private void summaryOfContracts() {
-    System.out.println("A summary of all contracts");
+    String store = getSummaryChoice(new Scanner(System.in));
+
+    Store contractStore = new Store(store);
+
+    List<Contract> contracts = contractStore.get();
+
+    System.out.println("Total Number of Contracts: " + contracts.size());
+    System.out.println("Contracts with High or Unlimited Data Bundles: " +
+        contracts.stream()
+            .filter(contract -> contract.getDataBundle() >= 3)
+            .count()
+    );
+
+    List<Integer> prices = contracts.stream()
+        .filter(contract -> contract.getPackageType() >= 3)
+        .map(Contract::getFinalPrice)
+        .collect(Collectors.toList());
+
+    OptionalDouble averagePrice = prices.stream().mapToInt(Integer::intValue).average();
+
+    if (averagePrice.isPresent()) {
+      double price = averagePrice.getAsDouble() / 100;
+      System.out.printf("Average charge for large packages: £%3.2f \n", price);
+    }
+
+    System.out.println("Number of contracts per month:");
+
+  }
+
+  /**
+   * Get users choice about which contracts they wish to summarise.
+   *
+   * @return int
+   */
+  private String getSummaryChoice(Scanner scanner) {
+    System.out.println("Which contracts would you like to summarise:");
+    System.out.println("1: Main");
+    System.out.println("2: Archive");
+
+    int choice = 0;
+
+    try {
+      choice = scanner.nextInt();
+    } catch (InputMismatchException e) {
+      this.invalidInputMessage();
+      this.getSummaryChoice(new Scanner(System.in));
+    }
+
+    if (choice < 1 || choice > 2) {
+      this.invalidInputMessage();
+      this.getSummaryChoice(new Scanner(System.in));
+    }
+
+    if (choice == 1) {
+      return "contracts";
+    } else {
+      return "archive";
+    }
+
   }
 
   /**

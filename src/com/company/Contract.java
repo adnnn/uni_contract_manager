@@ -26,6 +26,17 @@ public abstract class Contract {
     setDate(getCurrentDate());
   }
 
+  Contract(String[] fields) {
+    setDate(fields[0]);
+    setPackageType(Integer.parseInt(fields[1]));
+    setDataBundle(Integer.parseInt(fields[2]));
+    setContractDuration(Integer.parseInt(fields[3]));
+    setInternational(fields[4].charAt(0));
+    setReference(fields[5]);
+    setFinalPrice(Integer.parseInt(fields[6]));
+    setName(fields[7]);
+  }
+
   private String getCurrentDate() {
     Calendar cal = Calendar.getInstance();
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
@@ -150,5 +161,17 @@ public abstract class Contract {
     if (this instanceof BusinessContract) {
       this.reference = reference + "B";
     }
+  }
+
+  public static Contract hydrate(String line) {
+    String[] fields = line.split("\t");
+
+    String reference = fields[5];
+
+    if (reference.charAt(reference.length() - 1) == 'N') {
+      return new PersonalContract(fields);
+    }
+
+    return new BusinessContract(fields);
   }
 }
