@@ -454,7 +454,7 @@ class ContractManager {
     System.out.println("Please enter the full name of your customer: ");
     String name = this.formatName(scanner.nextLine());
 
-    if (name.length() > 25) {
+    if (name.length() == 0 || name.length() > 25) {
       this.invalidInputMessage();
       this.getValidName(new Scanner(System.in));
     }
