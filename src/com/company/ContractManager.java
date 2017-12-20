@@ -1,5 +1,6 @@
 package com.company;
 
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.OptionalDouble;
@@ -528,19 +529,28 @@ class ContractManager {
             .count()
     );
 
-    List<Integer> prices = contracts.stream()
+    Double average = contracts.stream()
         .filter(contract -> contract.getPackageType() >= 3)
         .map(Contract::getFinalPrice)
-        .collect(Collectors.toList());
+        .collect(Collectors.averagingInt(Integer::intValue));
 
-    OptionalDouble averagePrice = prices.stream().mapToInt(Integer::intValue).average();
-
-    if (averagePrice.isPresent()) {
-      double price = averagePrice.getAsDouble() / 100;
-      System.out.printf("Average charge for large packages: £%3.2f \n", price);
-    }
+    System.out.printf("Average charge for large packages: £%3.2f \n", average / 100);
 
     System.out.println("Number of contracts per month:");
+
+    HashMap<String, Integer> hash = new HashMap<>();
+    hash.put("Jan", contractStore.getFromMonth("Jan").size());
+    hash.put("Feb", contractStore.getFromMonth("Feb").size());
+    hash.put("Mar", contractStore.getFromMonth("Mar").size());
+    hash.put("Apr", contractStore.getFromMonth("Apr").size());
+    hash.put("May", contractStore.getFromMonth("May").size());
+    hash.put("Jun", contractStore.getFromMonth("Jun").size());
+    hash.put("Jul", contractStore.getFromMonth("Jul").size());
+    hash.put("Aug", contractStore.getFromMonth("Aug").size());
+    hash.put("Sep", contractStore.getFromMonth("Sep").size());
+    hash.put("Oct", contractStore.getFromMonth("Oct").size());
+    hash.put("Nov", contractStore.getFromMonth("Nov").size());
+    hash.put("Dec", contractStore.getFromMonth("Dec").size());
 
   }
 

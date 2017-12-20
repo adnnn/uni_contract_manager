@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Store {
@@ -49,12 +50,27 @@ public class Store {
 
   public List<Contract> get() {
     try {
-      List<Contract> contracts = Files.readAllLines(Paths.get("./" + this.file))
+      return Files.readAllLines(Paths.get("./" + this.file))
           .stream()
           .map(line -> Contract.hydrate(line))
           .collect(Collectors.toList());
 
-      return contracts;
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    return null;
+  }
+
+  public List<Contract> getFromMonth(String month) {
+    try {
+      Pattern pattern = Pattern.compile("^[0-9]{2}-" + month + "-[0-9]{4}");
+
+      return Files.lines(Paths.get("./" + this.file))
+          .filter(pattern.asPredicate())
+          .map(line -> Contract.hydrate(line))
+          .collect(Collectors.toList());
+
     } catch (IOException e) {
       e.printStackTrace();
     }
