@@ -86,11 +86,16 @@ class ContractManager {
     contract.setDataBundle(this.getDataBundle(new Scanner(System.in)));
     contract.setContractDuration(this.getContractPeriod(new Scanner(System.in)));
     contract.setInternational(this.getInternational(new Scanner(System.in)));
+    contract.setReference(getReference(new Scanner(System.in)));
     contract.calculatePrice();
 
     this.confirmContract(contract);
 
     contract.save();
+  }
+
+  private String getReference(Scanner scanner) {
+    return null;
   }
 
   /**
@@ -168,61 +173,49 @@ class ContractManager {
    * @see com.company.Contract A Contract object
    */
   private void displayContractOverview(Contract contract) {
-    printBorderTop();
-    System.out.printf("|%48s|\n", "");
+    Output.horizontalRule();
+    Output.emptyLine();
 
     System.out.printf("| %8s: %-36s |\n",
         "Customer", contract.getName()
-    )
-    ;
-    System.out.printf("|%48s|\n", "");
+    );
 
-    System.out.printf("| %8s: %-13s    %5s: %-12s |\n",
+    Output.emptyLine();
+
+    Output.columns(
         "Ref", contract.getReference(),
-        "Date", OutputFormatter.date(contract.getDate())
+        "Date", Output.date(contract.getDate())
     );
 
-    System.out.printf("| %8s: %-13s    %5s: %-12s |\n",
-        "Package", OutputFormatter.packageType(contract.getPackageType()),
-        "Data", OutputFormatter.dataBundle(contract.getDataBundle())
+    Output.columns(
+        "Package", Output.packageType(contract.getPackageType()),
+        "Data", Output.dataBundle(contract.getDataBundle())
     );
 
-    System.out.printf("| %8s: %-13s    %5s: %-12s |\n",
-        "Period", OutputFormatter.period(contract.getContractDuration()),
-        "Type", OutputFormatter.type(contract)
+    Output.columns(
+        "Peroid", Output.period(contract.getContractDuration()),
+        "Type", Output.type(contract)
     );
 
-    System.out.printf("|%48s|\n", "");
+    Output.emptyLine();
 
     System.out.printf("| %8s: %-4s %17s: %-12s |\n",
-        "Discount", OutputFormatter.discount(contract.getDiscount()),
-        "Intl. Calls", OutputFormatter.international(contract.getInternational())
+        "Discount", Output.discount(contract.getDiscount()),
+        "Intl. Calls", Output.international(contract.getInternational())
     );
 
-    System.out.printf("|%48s|\n", "");
+    Output.emptyLine();
 
     // @TODO refactor the code below.
-    String test = String.format("%s: £%3.2f",
-        OutputFormatter.monthlyFeeMessage(contract),
-        OutputFormatter.monthlyFee(contract)
+    String totalMessage = String.format("%s: £%3.2f",
+        Output.monthlyFeeMessage(contract),
+        Output.monthlyFee(contract)
     );
 
-    System.out.println(OutputFormatter.centered(test));
+    Output.centered(totalMessage);
 
-    System.out.printf("|%48s|\n", "");
-    printBorderTop();
-  }
-
-  /**
-   * Prints top top and bottom borders for the console output.
-   */
-  private void printBorderTop() {
-    System.out.print("+");
-    for (int i = 0; i < 48; i++) {
-      System.out.print("-");
-    }
-    System.out.print("+");
-    System.out.println();
+    Output.emptyLine();
+    Output.horizontalRule();
   }
 
   /**

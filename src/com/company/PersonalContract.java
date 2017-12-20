@@ -2,10 +2,6 @@ package com.company;
 
 public class PersonalContract extends Contract implements ContractInterface {
 
-  PersonalContract() {
-    super('P');
-  }
-
   /**
    * Define discount that is available for this type of contract.
    * Contract duration is available for dynamically calculating discounts.

@@ -22,8 +22,7 @@ public abstract class Contract {
       {850, 1050, 1250, 2000}
   };
 
-  Contract(Character contractType) {
-    reference = generateReference(contractType);
+  Contract() {
     setDate(getCurrentDate());
   }
 
@@ -150,5 +149,9 @@ public abstract class Contract {
 
   boolean hasDiscount() {
     return discount > 0;
+  }
+
+  public void setReference(String refernce) {
+    this.reference = refernce;
   }
 }

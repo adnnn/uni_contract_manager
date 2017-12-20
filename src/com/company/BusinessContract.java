@@ -2,10 +2,6 @@ package com.company;
 
 public class BusinessContract extends Contract implements ContractInterface {
 
-  BusinessContract() {
-    super('B');
-  }
-
   /**
    * Define discount that is available for this type of contract. Contract duration is available for
    * dynamically calculating discounts.
