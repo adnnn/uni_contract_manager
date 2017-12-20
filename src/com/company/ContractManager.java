@@ -95,6 +95,11 @@ class ContractManager {
     contract.save();
   }
 
+  /**
+   * Gets the reference input from the user and validates it.
+   *
+   * @return String
+   */
   private String getReference(Scanner scanner) {
     System.out.println("Please enter a reference code in the following format AB123:");
 
@@ -156,6 +161,9 @@ class ContractManager {
     this.resetContractManager();
   }
 
+  /**
+   * Guards againat invalid contract durations.
+   */
   private void confirmDuration(Contract contract) {
     if (contract instanceof BusinessContract && contract.getContractDuration() < 12) {
       System.out.println(
@@ -170,6 +178,9 @@ class ContractManager {
     }
   }
 
+  /**
+   * Guard against invalid data/package combinations.
+   */
   private void confirmPackageDataCombination(Contract contract) {
     if (contract.getBasePrice() == 0) {
       System.out.println(
@@ -223,7 +234,6 @@ class ContractManager {
 
     Output.emptyLine();
 
-    // @TODO refactor the code below.
     String totalMessage = String.format("%s: £%3.2f",
         Output.monthlyFeeMessage(contract),
         Output.monthlyFee(contract)
