@@ -26,15 +26,6 @@ public abstract class Contract {
     setDate(getCurrentDate());
   }
 
-  private String generateReference(Character contractType) {
-    String ref = "JB123";
-    if (contractType == 'B') {
-      return ref + "B";
-    }
-
-    return ref + "N";
-  }
-
   private String getCurrentDate() {
     Calendar cal = Calendar.getInstance();
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
