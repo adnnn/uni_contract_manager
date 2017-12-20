@@ -74,4 +74,21 @@ class OutputFormatter {
   static float monthlyFee(Contract contract) {
     return contract.getFinalPrice() / 100;
   }
+
+  static String centered(String text) {
+    int leftSpace = (48 - text.length()) / 2;
+    int rightSpace = leftSpace;
+
+    int totalCharacters = ((leftSpace * 2) + text.length());
+
+    if (totalCharacters < 48) {
+      rightSpace = leftSpace + 1;
+    }
+
+    if (totalCharacters > 48) {
+      rightSpace = leftSpace - 1;
+    }
+
+    return String.format("|%" + leftSpace + "s" + text + "%" + rightSpace + "s|", "", "");
+  }
 }

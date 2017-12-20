@@ -194,17 +194,20 @@ class ContractManager {
 
     System.out.printf("|%48s|\n", "");
 
-    System.out.printf("| %8s: %2s %18s: %-12s |\n",
+    System.out.printf("| %8s: %-4s %17s: %-12s |\n",
         "Discount", OutputFormatter.discount(contract.getDiscount()),
         "Intl. Calls", OutputFormatter.international(contract.getInternational())
     );
 
     System.out.printf("|%48s|\n", "");
 
-    System.out.printf("| %s: £%3.2f |\n",
+    // @TODO refactor the code below.
+    String test = String.format("%s: £%3.2f",
         OutputFormatter.monthlyFeeMessage(contract),
         OutputFormatter.monthlyFee(contract)
     );
+
+    System.out.println(OutputFormatter.centered(test));
 
     System.out.printf("|%48s|\n", "");
     printBorderTop();
