@@ -52,7 +52,7 @@ public class Store {
     try {
       return Files.readAllLines(Paths.get("./" + this.file))
           .stream()
-          .map(line -> Contract.hydrate(line))
+          .map(Contract::hydrate)
           .collect(Collectors.toList());
 
     } catch (IOException e) {
@@ -68,7 +68,7 @@ public class Store {
 
       return Files.lines(Paths.get("./" + this.file))
           .filter(pattern.asPredicate())
-          .map(line -> Contract.hydrate(line))
+          .map(Contract::hydrate)
           .collect(Collectors.toList());
 
     } catch (IOException e) {
