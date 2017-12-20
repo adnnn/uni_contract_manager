@@ -2,7 +2,9 @@ package com.company;
 
 import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.OptionalDouble;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -536,21 +538,33 @@ class ContractManager {
 
     System.out.printf("Average charge for large packages: £%3.2f \n", average / 100);
 
+    System.out.println();
     System.out.println("Number of contracts per month:");
+    System.out.println();
 
-    HashMap<String, Integer> hash = new HashMap<>();
-    hash.put("Jan", contractStore.getFromMonth("Jan").size());
-    hash.put("Feb", contractStore.getFromMonth("Feb").size());
-    hash.put("Mar", contractStore.getFromMonth("Mar").size());
-    hash.put("Apr", contractStore.getFromMonth("Apr").size());
-    hash.put("May", contractStore.getFromMonth("May").size());
-    hash.put("Jun", contractStore.getFromMonth("Jun").size());
-    hash.put("Jul", contractStore.getFromMonth("Jul").size());
-    hash.put("Aug", contractStore.getFromMonth("Aug").size());
-    hash.put("Sep", contractStore.getFromMonth("Sep").size());
-    hash.put("Oct", contractStore.getFromMonth("Oct").size());
-    hash.put("Nov", contractStore.getFromMonth("Nov").size());
-    hash.put("Dec", contractStore.getFromMonth("Dec").size());
+    Map<String, Integer> map = new LinkedHashMap<>();
+    map.put("Jan", contractStore.getFromMonth("Jan").size());
+    map.put("Feb", contractStore.getFromMonth("Feb").size());
+    map.put("Mar", contractStore.getFromMonth("Mar").size());
+    map.put("Apr", contractStore.getFromMonth("Apr").size());
+    map.put("May", contractStore.getFromMonth("May").size());
+    map.put("Jun", contractStore.getFromMonth("Jun").size());
+    map.put("Jul", contractStore.getFromMonth("Jul").size());
+    map.put("Aug", contractStore.getFromMonth("Aug").size());
+    map.put("Sep", contractStore.getFromMonth("Sep").size());
+    map.put("Oct", contractStore.getFromMonth("Oct").size());
+    map.put("Nov", contractStore.getFromMonth("Nov").size());
+    map.put("Dec", contractStore.getFromMonth("Dec").size());
+
+    for (String key : map.keySet()) {
+      System.out.print(String.format("%3s  ", key));
+    }
+
+    System.out.println();
+
+    for (Integer value : map.values()) {
+      System.out.print(String.format("%3d  ", value));
+    }
 
   }
 
