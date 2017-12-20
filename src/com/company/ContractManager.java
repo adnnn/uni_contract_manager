@@ -1,11 +1,9 @@
 package com.company;
 
-import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.OptionalDouble;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
