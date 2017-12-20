@@ -2,6 +2,7 @@ package com.company;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 class ContractManager {
 
@@ -95,7 +96,23 @@ class ContractManager {
   }
 
   private String getReference(Scanner scanner) {
-    return null;
+    System.out.println("Please enter a reference code in the following format AB123:");
+
+    String code = "";
+
+    try {
+      code = scanner.nextLine();
+    } catch (InputMismatchException e) {
+      this.invalidInputMessage();
+      this.getReference(new Scanner(System.in));
+    }
+
+    if (!Pattern.matches("[a-zA-Z]{2}\\d{3}", code)) {
+      this.invalidInputMessage();
+      this.getReference(new Scanner(System.in));
+    }
+
+    return code.toUpperCase();
   }
 
   /**

@@ -142,7 +142,13 @@ public abstract class Contract {
     return discount > 0;
   }
 
-  public void setReference(String refernce) {
-    this.reference = refernce;
+  public void setReference(String reference) {
+    if (this instanceof PersonalContract) {
+      this.reference = reference + "N";
+    }
+
+    if (this instanceof BusinessContract) {
+      this.reference = reference + "B";
+    }
   }
 }
