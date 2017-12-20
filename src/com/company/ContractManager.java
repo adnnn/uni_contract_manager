@@ -2,7 +2,6 @@ package com.company;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import org.jetbrains.annotations.NotNull;
 
 class ContractManager {
 
@@ -470,7 +469,6 @@ class ContractManager {
    * @param enteredName String representation of the name provided by the user.
    * @return name A correctly formatted String [Andrew Clark => A Clark]
    */
-  @NotNull
   private String formatName(String enteredName) {
     String name = "";
 
