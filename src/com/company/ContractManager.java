@@ -75,7 +75,16 @@ class ContractManager {
    * @todo Summary of contracts for a given month.
    */
   private void monthlySummaryOfContracts() {
+    String store = getSummaryChoice(new Scanner(System.in));
+      
     System.out.println("Please enter the month (1-12) you would like to view all contracts for: ");
+    String month = this.getMonthChoice(new Scanner(System.in));
+
+    Store contractStore = new Store(store);
+
+    List<Contract> contracts = contractStore.getFromMonth(month.substring(0, 3));
+
+    generalSummary(contracts);
   }
 
   /**
@@ -511,9 +520,9 @@ class ContractManager {
 
     return name;
   }
-
+  
   /**
-   * @todo Return an overview of contracts in archive.txt
+   * Summarises all the contracts in the chosen store file.
    */
   private void summaryOfContracts() {
     String store = getSummaryChoice(new Scanner(System.in));
@@ -522,49 +531,66 @@ class ContractManager {
 
     List<Contract> contracts = contractStore.get();
 
-    System.out.println("Total Number of Contracts: " + contracts.size());
-    System.out.println("Contracts with High or Unlimited Data Bundles: " +
-        contracts.stream()
-            .filter(contract -> contract.getDataBundle() >= 3)
-            .count()
-    );
+    generalSummary(contracts);
 
-    Double average = contracts.stream()
-        .filter(contract -> contract.getPackageType() >= 3)
-        .map(Contract::getFinalPrice)
-        .collect(Collectors.averagingInt(Integer::intValue));
-
-    System.out.printf("Average charge for large packages: £%3.2f \n", average / 100);
-
-    System.out.println();
-    System.out.println("Number of contracts per month:");
-    System.out.println();
-
-    Map<String, Integer> map = new LinkedHashMap<>();
-    map.put("Jan", contractStore.getFromMonth("Jan").size());
-    map.put("Feb", contractStore.getFromMonth("Feb").size());
-    map.put("Mar", contractStore.getFromMonth("Mar").size());
-    map.put("Apr", contractStore.getFromMonth("Apr").size());
-    map.put("May", contractStore.getFromMonth("May").size());
-    map.put("Jun", contractStore.getFromMonth("Jun").size());
-    map.put("Jul", contractStore.getFromMonth("Jul").size());
-    map.put("Aug", contractStore.getFromMonth("Aug").size());
-    map.put("Sep", contractStore.getFromMonth("Sep").size());
-    map.put("Oct", contractStore.getFromMonth("Oct").size());
-    map.put("Nov", contractStore.getFromMonth("Nov").size());
-    map.put("Dec", contractStore.getFromMonth("Dec").size());
-
-    for (String key : map.keySet()) {
-      System.out.print(String.format("%3s  ", key));
-    }
-
-    System.out.println();
-
-    for (Integer value : map.values()) {
-      System.out.print(String.format("%3d  ", value));
-    }
+    monthlyBreakdown(contractStore);
 
   }
+
+  /**
+   * Breakdown of contracts in each month of the year.
+   * @param contractStore 
+   */
+    private void monthlyBreakdown(Store contractStore) {
+        System.out.println();
+        System.out.println("Number of contracts per month:");
+        System.out.println();
+        
+        Map<String, Integer> map = new LinkedHashMap<>();
+        map.put("Jan", contractStore.getFromMonth("Jan").size());
+        map.put("Feb", contractStore.getFromMonth("Feb").size());
+        map.put("Mar", contractStore.getFromMonth("Mar").size());
+        map.put("Apr", contractStore.getFromMonth("Apr").size());
+        map.put("May", contractStore.getFromMonth("May").size());
+        map.put("Jun", contractStore.getFromMonth("Jun").size());
+        map.put("Jul", contractStore.getFromMonth("Jul").size());
+        map.put("Aug", contractStore.getFromMonth("Aug").size());
+        map.put("Sep", contractStore.getFromMonth("Sep").size());
+        map.put("Oct", contractStore.getFromMonth("Oct").size());
+        map.put("Nov", contractStore.getFromMonth("Nov").size());
+        map.put("Dec", contractStore.getFromMonth("Dec").size());
+        
+        for (String key : map.keySet()) {
+            System.out.print(String.format("%3s  ", key));
+        }
+        
+        System.out.println();
+        
+        for (Integer value : map.values()) {
+            System.out.print(String.format("%3d  ", value));
+        }
+    }
+
+    /**
+     * General summary of the given Contract list.
+     * 
+     * @param contracts 
+     */
+    private void generalSummary(List<Contract> contracts) {
+        System.out.println("Total Number of Contracts: " + contracts.size());
+        System.out.println("Contracts with High or Unlimited Data Bundles: " +
+                contracts.stream()
+                        .filter(contract -> contract.getDataBundle() >= 3)
+                        .count()
+        );
+        
+        Double average = contracts.stream()
+                .filter(contract -> contract.getPackageType() >= 3)
+                .map(Contract::getFinalPrice)
+                .collect(Collectors.averagingInt(Integer::intValue));
+        
+        System.out.printf("Average charge for large packages: £%3.2f \n", average / 100);
+    }
 
   /**
    * Get users choice about which contracts they wish to summarise.
@@ -626,4 +652,33 @@ class ContractManager {
     System.out.println("4. Find and Display Contract");
     System.out.println("0. Exit");
   }
+
+    private String getMonthChoice(Scanner scanner) {
+        Map<Integer, String> months = new LinkedHashMap<>();
+        months.put(1, "January");
+        months.put(2, "February");
+        months.put(3, "March");
+        months.put(4, "April");
+        months.put(5, "May");
+        months.put(6,"June");
+        months.put(7, "July");
+        months.put(8, "August");
+        months.put(9, "September");
+        months.put(10, "October");
+        months.put(11, "November");
+        months.put(12, "December");
+        
+        for (Map.Entry<Integer, String> entry : months.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+        
+        int choice = scanner.nextInt();
+        
+        if(choice < 1 || choice > 12) {
+            this.invalidInputMessage();
+            this.getMonthChoice(new Scanner(System.in));
+        }
+        
+        return months.get(choice);
+    }
 }
