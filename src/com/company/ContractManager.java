@@ -456,7 +456,6 @@ class ContractManager {
    * @param scanner Scanner object
    * @return Integer Denotes Package [1 => small, 2 => medium, 3 => large]
    * @see Scanner Scanner Class
-   * @see Integer Integer Class (note: not int the primitive data type)
    */
   private Integer getPackage(Scanner scanner) {
     System.out.println("Please Enter Your Package Choice:");
@@ -464,7 +463,7 @@ class ContractManager {
     System.out.println("2: Medium");
     System.out.println("3: Large");
 
-    Integer choice = 0;
+    int choice = 0;
 
     try {
       choice = scanner.nextInt();
