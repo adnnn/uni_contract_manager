@@ -82,7 +82,7 @@ class ContractManager {
 
     Store contractStore = new Store(store);
 
-    List<Contract> contracts = contractStore.getFromMonth(month.substring(0, 3));
+    List<Contract> contracts = contractStore.getFromMonth(month);
 
     generalSummary(contracts);
   }
@@ -679,6 +679,6 @@ class ContractManager {
             this.getMonthChoice(new Scanner(System.in));
         }
         
-        return months.get(choice);
+        return months.get(choice).substring(0,3);
     }
 }
