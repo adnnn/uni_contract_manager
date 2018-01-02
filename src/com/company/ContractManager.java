@@ -630,16 +630,24 @@ class ContractManager {
    * @param scanner Scanner Object
    * @see Scanner Scanner Class
    */
-  private void getMenuChoice(Scanner scanner) {
-    this.menuChoice = scanner.nextInt();
+  private void getMenuChoice(Scanner scanner) {    
+    int choice = 0;
 
-    if (this.menuChoice < 0 || this.menuChoice > 4) {
-      System.out
-          .println("Sorry, that was an invalid choice. Please review the menu and choose again.");
-      System.out.println();
+    try {
+      choice = scanner.nextInt();
+    } catch (InputMismatchException e) {
+      this.invalidInputMessage();
       this.showMenu();
-      this.getMenuChoice(scanner);
+      this.getMenuChoice(new Scanner(System.in));
     }
+
+    if (choice < 0 || choice > 4) {
+      this.invalidInputMessage();
+      this.showMenu();
+      this.getMenuChoice(new Scanner(System.in));
+    }
+
+    this.menuChoice = choice;
   }
 
   /**
