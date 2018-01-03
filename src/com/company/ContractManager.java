@@ -68,12 +68,20 @@ class ContractManager {
    * @todo Find a specific contract and display its overview.
    */
   private void findContract() {
-    System.out.println("Please enter a contract identifier: ");
+    String store = getSummaryChoice(new Scanner(System.in));
+    
+    System.out.println("In order to search \"" + store + "\" please enter a search term: ");
+    String query = this.getSearchQuery(new Scanner(System.in));
+    
+    Store contractStore = new Store(store);
+
+    List<Contract> contracts = contractStore.search(query);
+    
+    for (Contract contract : contracts) {
+        this.displayContractOverview(contract);
+    }
   }
 
-  /**
-   * @todo Summary of contracts for a given month.
-   */
   private void monthlySummaryOfContracts() {
     String store = getSummaryChoice(new Scanner(System.in));
       
@@ -687,5 +695,11 @@ class ContractManager {
         }
         
         return months.get(choice).substring(0,3);
+    }
+
+    private String getSearchQuery(Scanner scanner) {
+        String input = scanner.next();
+        
+        return input;
     }
 }
