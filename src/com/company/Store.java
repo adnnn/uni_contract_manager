@@ -77,4 +77,26 @@ public class Store {
 
     return null;
   }
+  
+  /**
+   * Search the name and reference fields on all contracts.
+   * 
+   * @param query
+   * @return List of contracts that partially or entirely match the search query.
+   */
+  public List<Contract> search(String query) {
+      try {          
+          return Files.lines(Paths.get("./" + this.file))
+                  .map(Contract::hydrate)
+                  .filter(
+                          contract -> contract.getName().contains(query)
+                          || contract.getReference().contains(query)
+                  )
+                  .collect(Collectors.toList());
+      } catch (IOException e) {
+          e.printStackTrace();
+      }
+      
+      return null;
+  }
 }
