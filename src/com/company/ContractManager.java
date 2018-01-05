@@ -49,7 +49,7 @@ class ContractManager {
         this.monthlySummaryOfContracts();
         break;
       case 4:
-        this.findContract();
+        this.searchContracts();
         break;
       case 0:
         this.killContractManger();
@@ -65,9 +65,9 @@ class ContractManager {
   }
 
   /**
-   * @todo Find a specific contract and display its overview.
+   * Search for contracts.
    */
-  private void findContract() {
+  private void searchContracts() {
     String store = getSummaryChoice(new Scanner(System.in));
     
     System.out.println("In order to search \"" + store + "\" please enter a search term: ");
@@ -497,7 +497,11 @@ class ContractManager {
    */
   private String getValidName(Scanner scanner) {
     System.out.println("Please enter the full name of your customer: ");
-    String name = this.formatName(scanner.nextLine());
+    String name = scanner.nextLine();
+    
+    if(name.length() > 0) {
+        name = formatName(name);
+    }
 
     if (name.length() == 0 || name.length() > 25) {
       this.invalidInputMessage();
